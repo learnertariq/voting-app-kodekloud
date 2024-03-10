@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: result-deployment
+  labels: # This label doesn’t matter.
+    name: result-app
+    app: demo-voting-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: result-app-pod
+      app: demo-voting-app
+  template:
+    metadata:
+      name: result-app-pod-name
+      labels: # this label matters
+        name: result-app-pod
+        app: demo-voting-app
+    spec:
+      containers:
+      - name: result-app
+        image: kodekloud/examplevotingapp_result:before
+        ports:
+        - containerPort: 80

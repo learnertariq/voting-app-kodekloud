@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: result-app-service-name
+  labels: # This label doesn’t matter.
+    name: result-app-service
+    app: demo-result-app
+spec:
+  type: NodePort
+  ports:
+  - targetPort: 80 	#podPort
+    port: 5001 	#serviceListeningPort - it is mandatory
+    nodePort: 31001
+  selector: 	#valuesFromPodLabels
+    name: result-app-pod
+    app: demo-voting-app

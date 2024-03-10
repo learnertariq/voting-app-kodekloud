@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vote
+  labels:
+    name: vote
+
+# kubectl config set-context kubernetes-admin@kubernetes --namespace=vote
+# kubectl config use-context vote

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+  labels: # This label doesn’t matter.
+    name: postgres-label
+    app: demo-voting-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: postgres-pod
+      app: demo-voting-app
+  template:
+    metadata:
+      name: postgres-pod-name
+      labels:
+        name: postgres-pod
+        app: demo-voting-app
+
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:9.4
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: "postgres"
+        - name: POSTGRES_PASSWORD
+          value: "postgres"
+        - name: POSTGRES_HOST_AUTH_METHOD
+          value: "trust"
+        
+        volumeMounts: # a mount for site-data
+        - name: db-data
+          mountPath: /var/lib/postgresql/data
+          #subPath: html
+      volumes:
+      - name: db-data
+        emptyDir: {}
